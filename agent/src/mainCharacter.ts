@@ -14,6 +14,9 @@ import { coinmarketcapPlugin } from "@elizaos/plugin-coinmarketcap"
 // Web search
 import { webSearchPlugin } from "@elizaos/plugin-web-search"
 
+// Image generation
+import { imageGenerationPlugin } from "@elizaos/plugin-image-generation"
+
 // === CLIENTS === //
 import {Clients} from "@elizaos/core"
 
@@ -28,18 +31,19 @@ export const mainCharacter: Character = {
         //coingeckoPlugin, # NOTE : Not used now to to API price
         coinmarketcapPlugin,
         //WhatsAppPlugin,
-        webSearchPlugin
+        webSearchPlugin,
     ],
     clients: [
         Clients.DISCORD,
         //Clients.TELEGRAM,
     ],
-    modelProvider: ModelProviderName.OPENAI,
+    modelProvider: ModelProviderName.OPENROUTER,
     settings: {
         secrets: {},
         voice: {
             "elevenlabs": {
-                "voiceId": "21m00Tcm4TlvDq8ikWAM"
+                "voiceId": "21m00Tcm4TlvDq8ikWAM",
+                "model": "eleven_multilingual_v2"
             }
         },
     },
