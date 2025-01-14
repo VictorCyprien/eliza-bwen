@@ -27,15 +27,16 @@ export const mainCharacter: Character = {
     name: "BabyWen",
     username: "babywen",
     plugins: [
-        obsidianPlugin,
+        //obsidianPlugin,
         //coingeckoPlugin, # NOTE : Not used now to to API price
-        coinmarketcapPlugin,
+        //coinmarketcapPlugin,
         //WhatsAppPlugin,
-        webSearchPlugin,
+        //webSearchPlugin,
     ],
     clients: [
-        Clients.DISCORD,
+        //Clients.DISCORD,
         //Clients.TELEGRAM,
+        //...
     ],
     modelProvider: ModelProviderName.OPENROUTER,
     settings: {
