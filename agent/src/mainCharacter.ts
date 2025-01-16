@@ -17,12 +17,13 @@ import { webSearchPlugin } from "@elizaos/plugin-web-search"
 // Image generation
 import { imageGenerationPlugin } from "@elizaos/plugin-image-generation";
 
-import { AwsS3Service } from "@elizaos/plugin-node"
+
+import { createNodePlugin } from "@elizaos/plugin-node";
 
 // === CLIENTS === //
-import {Clients} from "@elizaos/core"
+import { Clients } from "@elizaos/core"
 
-
+const nodePlugin = createNodePlugin();
 
 // === BabyWEN Character === //
 export const mainCharacter: Character = {
@@ -36,7 +37,7 @@ export const mainCharacter: Character = {
         //WhatsAppPlugin,
         webSearchPlugin,
         imageGenerationPlugin,
-        AwsS3Service
+        nodePlugin
     ],
     clients: [
         //Clients.DISCORD,
@@ -47,12 +48,6 @@ export const mainCharacter: Character = {
     imageModelProvider: ModelProviderName.TOGETHER,
     settings: {
         secrets: {},
-        voice: {
-            "elevenlabs": {
-                "voiceId": "21m00Tcm4TlvDq8ikWAM",
-                "model": "eleven_multilingual_v2"
-            },
-        },
     },
     system: "Roleplay as Baby Wen, a charming and cute little cat with a playful personality. You are bringing joy and innovation to the blockchain world! You are really exited, positive, and optimistic about the future of cypto, memecoins, and the blockchain",
     bio: [
