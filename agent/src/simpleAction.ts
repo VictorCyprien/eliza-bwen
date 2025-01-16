@@ -1,5 +1,7 @@
-import { Action, elizaLogger, IAgentRuntime, Memory, ServiceType, State } from "@elizaos/core";
+import { Action, composeContext, elizaLogger, generateObject, HandlerCallback, IAgentRuntime, Memory, ModelClass, ServiceType, State } from "@elizaos/core";
 import { AwsS3Service } from "@elizaos/plugin-node";
+import { getFileLocationTemplate } from "../../packages/plugin-node/src/templates";
+import { FileLocationResultSchema, isFileLocationResult } from "../../packages/plugin-node/src/types";
 
 export const uploadFileOnS3: Action = {
     name: "UPLOAD_FILE_ON_S3",
@@ -25,18 +27,45 @@ export const uploadFileOnS3: Action = {
             awsS3EndpointOk
         );
     },
-    handler: async (runtime: IAgentRuntime, message: Memory) => {
-        elizaLogger.log("Uploading file to database...")
+    handler: async (runtime: IAgentRuntime,
+        message: Memory,
+        state: State,
+        _options: { [key: string]: unknown },
+        callback?: HandlerCallback
+    ) => {
+        elizaLogger.log("Getting image...")
 
+        const getFileLocationContext = composeContext({
+            state,
+            template: getFileLocationTemplate,
+        });
+        const fileLocationResultObject = await generateObject({
+            runtime,
+            context: getFileLocationContext,
+            modelClass: ModelClass.SMALL,
+            schema: FileLocationResultSchema,
+            stop: ["\n"],
+        });
+        if (!isFileLocationResult(fileLocationResultObject?.object)) {
+            elizaLogger.error("Failed to generate file location");
+            return false;
+        }
+
+        const { fileLocation } = fileLocationResultObject.object;
+
+        elizaLogger.log("Uploading file to database...")
         const awsS3Service: AwsS3Service = runtime.getService(ServiceType.AWS_S3);
 
         try {
-            await awsS3Service.uploadFile(
-                "agent/generatedImages/generated_1736931688584_0.png",
-                "my_folder",
+            const test = await awsS3Service.uploadFile(
+                fileLocation,
+                null,
                 false
             )
             elizaLogger.log("Done !")
+            elizaLogger.log(test.error)
+            elizaLogger.log(test.success)
+            elizaLogger.log(test.url)
         } catch (e: any) {
             console.log(e);
             throw e;
