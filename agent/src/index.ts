@@ -112,6 +112,7 @@ import yargs from "yargs";
 
 
 import { mainCharacter } from "./mainCharacter";
+import { customAction } from "./simpleAction"
 
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
@@ -945,7 +946,7 @@ export async function createAgent(
                 : null,
         ].filter(Boolean),
         providers: [],
-        actions: [],
+        actions: [customAction],
         services: [],
         managers: [],
         cacheManager: cache,
