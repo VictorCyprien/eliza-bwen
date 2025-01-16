@@ -111,10 +111,6 @@ import { fileURLToPath } from "url";
 import yargs from "yargs";
 
 
-import { mainCharacter } from "./mainCharacter";
-import { uploadFileOnS3 } from "./simpleAction"
-
-
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
 const __dirname = path.dirname(__filename); // get the name of the directory
 
@@ -340,7 +336,7 @@ export async function loadCharacters(
 
     if (loadedCharacters.length === 0) {
         elizaLogger.info("No characters found, using default character");
-        loadedCharacters.push(mainCharacter);
+        loadedCharacters.push(defaultCharacter);
     }
 
     return loadedCharacters;
@@ -1114,7 +1110,7 @@ const startAgents = async () => {
     let serverPort = parseInt(settings.SERVER_PORT || "3000");
     const args = parseArguments();
     let charactersArg = args.characters || args.character;
-    let characters = [mainCharacter];
+    let characters = [defaultCharacter];
 
     if (charactersArg || hasValidRemoteUrls()) {
         characters = await loadCharacters(charactersArg);
