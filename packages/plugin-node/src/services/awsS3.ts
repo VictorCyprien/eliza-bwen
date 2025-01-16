@@ -126,13 +126,9 @@ export class AwsS3Service extends Service implements IAwsS3Service {
             // If not using signed URL, return public access URL
             if (!useSignedUrl) {
                 // Use the endpoint directly (e.g., local S3) if a custom value was set
-                if (this.s3Client.config.endpoint) {
-                    const endpoint = await this.s3Client.config.endpoint();
-                    const port = endpoint.port ? `:${endpoint.port}` : "";
-                    result.url = `${endpoint.protocol}//${endpoint.hostname}${port}${endpoint.path}${this.bucket}/${fileName}`;
-                } else {
-                    result.url = `https://${this.bucket}.s3.${process.env.AWS_REGION}.amazonaws.com/${fileName}`;
-                }
+                const endpoint = await this.s3Client.config.endpoint();
+                const port = endpoint.port ? `:${endpoint.port}` : "";
+                result.url = `${endpoint.protocol}//${endpoint.hostname}${port}${endpoint.path}${this.bucket}/${fileName}`;
             } else {
                 const getObjectCommand = new GetObjectCommand({
                     Bucket: this.bucket,
