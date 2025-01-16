@@ -59,7 +59,7 @@ export const uploadFileOnS3: Action = {
         try {
             const test = await awsS3Service.uploadFile(
                 fileLocation,
-                null,
+                state.userId,
                 false
             )
             elizaLogger.log("Done !")
