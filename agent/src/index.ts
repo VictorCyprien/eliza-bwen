@@ -111,7 +111,7 @@ import { fileURLToPath } from "url";
 import yargs from "yargs";
 
 
-import { uploadFileOnS3 } from "./simpleAction"
+import { uploadFileOnS3, uploadFileOnInstagram } from "./simpleAction"
 
 
 const __filename = fileURLToPath(import.meta.url); // get the resolved path to the file
@@ -945,7 +945,7 @@ export async function createAgent(
                 : null,
         ].filter(Boolean),
         providers: [],
-        actions: [uploadFileOnS3],
+        actions: [uploadFileOnS3, uploadFileOnInstagram],
         services: [],
         managers: [],
         cacheManager: cache,
